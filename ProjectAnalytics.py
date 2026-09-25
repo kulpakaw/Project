@@ -20,3 +20,7 @@ def csv_to_dataframe(file_path):
     except Exception as e:
         print(f"Error reading CSV: {e}")
         return pd.DataFrame()
+
+file_path = "Scripts/student_mat.csv"
+data = csv_to_dataframe(file_path)
+print(data.head())
