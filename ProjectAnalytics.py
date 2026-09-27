@@ -80,7 +80,39 @@ def preprocess_data(csv_data, target_column):
     return X_processed, y
     
 
+#function run_knn do dopracowania
+
+def run_knn(X, y, k=5):
+    """Train and evaluate KNN classifier."""
+
+    if k <= 0:
+        raise ValueError("Number of neighbors (k) must be positive.")
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42
+    )
+
+    knn = KNeighborsClassifier(n_neighbors=k)
+
+    knn.fit(X_train, y_train)
+
+    y_pred = knn.predict(X_test)
+
+    print("\nKNN Classification Report:")
+    print(classification_report(y_test, y_pred))
+
+    print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+
+
 #testing csv_to_dataframe and preprocess_data_functions
 data = csv_to_dataframe(file_path)
 print(data)
-preprocess_data(data, target_column=data.columns[-1])
+X_processed, y = preprocess_data(
+    data,
+    target_column=data.columns[-1]
+)
+
+run_knn(X_processed, y)
